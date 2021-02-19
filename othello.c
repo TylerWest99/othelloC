@@ -36,6 +36,29 @@ char *toString(int size, char board[][size])
 void initializeBoard(int size, char board[][size])
 {
 	// COMPLETE THIS FUNCTION
+	int halfMax = size /2;
+	int halfMin = halfMax -1;
+
+	for(int i = 0; i < size; i++){
+		for(int j = 0; j < size; j++){
+			//sets the black markers
+			if((i == halfMax) && (j == halfMax)){
+				board[i][j] = 'B';
+			}
+			else if(i == halfMin && j == halfMin){
+				board[i][j] = 'B';
+			}
+			//sets the white markers
+			else if((i == halfMin || i == halfMax) && (j == halfMax || j == halfMin)){
+				board[i][j] = 'W';
+			}
+			else{
+				board[i][j] = '-';
+			}
+			
+
+		}
+	}
 }
 
 // Returns true if moving the disc to location row,col is valid; false otherwise
