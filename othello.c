@@ -35,7 +35,7 @@ char *toString(int size, char board[][size])
 // Initializes the board with start configuration of discs (see project specs)
 void initializeBoard(int size, char board[][size])
 {
-	// COMPLETE THIS FUNCTION
+	// Done
 	int halfMax = size /2;
 	int halfMin = halfMax -1;
 
@@ -55,16 +55,107 @@ void initializeBoard(int size, char board[][size])
 			else{
 				board[i][j] = '-';
 			}
-			
-
 		}
 	}
 }
 
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
-{
-	return true;	// REPLACE THIS WITH YOUR IMPLEMENTATION
+{	
+	bool canFlip = false;
+	int r = 1;
+	int c = 1;
+
+	//row +r
+	while(board[row+r+1][col] == 'W' || board[row+r+1][col] == 'B' || board[row+r+1][col] == '-'){
+		if(board[row+r][col] == disc){
+			canFlip = true;
+		}
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//row -r
+	while(board[row-r-1][col] == 'W' || board[row-r-1][col] == 'B' || board[row-r-1][col] == '-'){
+		if(board[row-r][col] == disc){
+			canFlip = true;
+		}
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//col +c
+	while(board[row][col+c+1] == 'W' || board[row][col+c+1] == 'B' || board[row][col+c+1] == '-'){
+		if(board[row][col+c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//col -c
+	while(board[row][col-c-1] == 'W' || board[row][col-c-1] == 'B' || board[row][col-c-1] == '-'){
+		if(board[row][col-c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//col +c row + r
+	while(board[row+r+1][col+c+1] == 'W' || board[row+r+1][col+c+1] == 'B' || board[row+r+1][col+c+1] == '-'){
+		if(board[row+r][col+c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//col +c row -r
+	while(board[row-r-1][col+c+1] == 'W' || board[row-r-1][col+c+1] == 'B' || board[row-r-1][col+c+1] == '-'){
+		if(board[row-r][col+c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;
+
+	//col -c row -r
+	while(board[row-r-1][col-c-1] == 'W' || board[row-r-1][col-c-1] == 'B' || board[row-r-1][col-c-1] == '-'){
+		if(board[row-r][col-c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;	
+
+	//col -c row +r
+	while(board[row+r+1][col-c-1] == 'W' || board[row+r+1][col-c-1] == 'B' || board[row+r+1][col-c-1] == '-'){
+		if(board[row+r][col-c] == disc){
+			canFlip = true;
+		}
+		c = c + 1;
+		r = r + 1;
+	}
+	r = 1;
+	c = 1;
+
+	if((canFlip) && (board[row][col] == '-' )){
+		return true;
+	}else{
+		return false;
+	}
+	// Done (partially) has to do with the piece next to it being same as one being dropped
 }
 
 // Places the disc at location row,col and flips the opponent discs as needed
@@ -86,7 +177,8 @@ bool isValidMoveAvailable(int size, char board[][size], char disc)
 // Returns true if the board is fully occupied with discs; false otherwise
 bool isBoardFull(int size, char board[][size])
 {
-	return false;	// REPLACE THIS WITH YOUR IMPLEMENTATION	
+	return false;
+	// Not Done
 }
 
 // Returns true if either the board is full or a valid move is not available for either disc; false otherwise
