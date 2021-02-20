@@ -159,131 +159,12 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 // Places the disc at location row,col and flips the opponent discs as needed
 void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 {
-
 	if (!isValidMove(size,board,row,col,disc)) {
 		return;
-	}else{
-		board[row][col] = disc;
-		int c = 0;
-		char notDisc;
-		bool hasEnd = false;
+	}	
+	return;
 
-		if(disc == 'W'){
-			notDisc = 'B';
-		}
-		if(disc == 'B'){
-			notDisc = 'W';
-		}
-
-		//row +1
-		while((board[row+c+1][col] == 'W' || board[row+c+1][col] == 'B' || board[row+c+1][col] == '-') && hasEnd == false){
-			if(board[row+c][col]  == notDisc){
-				board[row+c][col] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//row +1 col +1
-		while((board[row+c+1][col+c+1] == 'W' || board[row+c+1][col+c+1] == 'B' || board[row+c+1][col+c+1] == '-') && hasEnd == false){
-			if(board[row+c][col+c]  == notDisc){
-				board[row+c][col+c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//row +1 col -1
-		while((board[row+c+1][col-c-1] == 'W' || board[row+c+1][col-c-1] == 'B' || board[row+c+1][col-c-1] == '-') && hasEnd == false){
-			if(board[row+c][col-c]  == notDisc){
-				board[row+c][col-c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//col +1
-		while((board[row][col+c+1] == 'W' || board[row][col+c+1] == 'B' || board[row][col+c+1] == '-') && hasEnd == false){
-			if(board[row][col+c]  == notDisc){
-				board[row][col+c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//col -1
-		while((board[row][col-c-1] == 'W' || board[row][col-c-1] == 'B' || board[row][col-c-1] == '-') && hasEnd == false){
-			if(board[row][col-c]  == notDisc){
-				board[row][col-c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//row -1 col +1 
-		while((board[row-c-1][col+c+1] == 'W' || board[row-c-1][col+c+1] == 'B' || board[row-c-1][col+c+1] == '-') && hasEnd == false){
-			if(board[row-c][col+c]  == notDisc){
-				board[row-c][col+c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//row -1 col -1
-		while((board[row-c-1][col-c-1] == 'W' || board[row-c-1][col-c-1] == 'B' || board[row-c-1][col-c-1] == '-') && hasEnd == false){
-			if(board[row-c][col-c]  == notDisc){
-				board[row-c][col-c] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-		//row -1
-		while((board[row-c-1][col] == 'W' || board[row-c-1][col] == 'B' || board[row-c-1][col] == '-') && hasEnd == false){
-			if(board[row-c][col]  == notDisc){
-				board[row-c][col] = disc;
-			}else{
-				hasEnd = true;
-			}
-			c = c + 1;
-		}
-		//sets the c back to 0
-		c = 0;
-		hasEnd = false;
-
-
-		//return;
-	}
-
-	// Done (may have bugs though)
+	// Do this
 }
 
 // Returns true if a valid move for disc is available; false otherwise
@@ -317,7 +198,7 @@ bool isValidMoveAvailable(int size, char board[][size], char disc)
 		}
 	}
 	return canMove;
-	//Good but depends on others
+	//Done
 }
 
 // Returns true if the board is fully occupied with discs; false otherwise
@@ -335,7 +216,7 @@ bool isBoardFull(int size, char board[][size])
 		return true;
 	}
 	return false;
-	// Not Done
+	// Done
 }
 
 // Returns true if either the board is full or a valid move is not available for either disc; false otherwise
@@ -346,7 +227,7 @@ bool isGameOver(int size, char board[][size])
 	}else{
 		return false;
 	}
-	return false;	// REPLACE THIS WITH YOUR IMPLEMENTATION
+	return false;	// Done
 }
 
 // If there is a winner, it returns the disc (BLACK or WHITE) associated with the winner.
@@ -371,10 +252,12 @@ char checkWinner(int size, char board[][size])
 		}
 	}
 	if(blackCounter > whiteCounter){
-		return 'B';
+		return BLACK;
 	}
-	if(whiteCounter > blackCounter){
-		return 'W';
+	else if(whiteCounter > blackCounter){
+		return WHITE;
+	}else{
+		return TIE;
 	}
-	return TIE;	// REPLACE THIS WITH YOUR IMPLEMENTATION
+		//Done
 }
