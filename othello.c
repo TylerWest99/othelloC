@@ -1,7 +1,7 @@
 //***************************************************
 // Filename: othello.c
 //
-// Author(s): 
+// Author(s): Tyler West  
 //***************************************************
 
 #include "othello.h"
@@ -62,98 +62,161 @@ void initializeBoard(int size, char board[][size])
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
 {	
 	bool canFlip = false;
-	int r = 1;
+	bool done = false;
 	int c = 1;
+	char notDisc;
+	if(disc == 'W'){
+		notDisc = 'B';
+    }
+	if(disc == 'B'){
+		notDisc = 'W';
+    }
 
 	//row +r
-	while(board[row+r+1][col] == 'W' || board[row+r+1][col] == 'B' || board[row+r+1][col] == '-'){
-		if((board[row+r][col] == disc) && (board[row+1][col] != disc) && (board[row+1][col] != '-')){
-			canFlip = true;
-		}
-		r = r + 1;
+	while(!done){
+		if(board[row+1][col] == notDisc && board[row][col] == '-'){
+			if(board[row+c][col] == 'W' || board[row+c][col] == 'B' || board[row+c][col] == '-'){
+				if(board[row+c][col] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
 	//row -r
-	while(board[row-r-1][col] == 'W' || board[row-r-1][col] == 'B' || board[row-r-1][col] == '-'){
-		if(board[row-r][col] == disc && (board[row-1][col] != disc) && (board[row-1][col] != '-')){
-			canFlip = true;
-		}
-		r = r + 1;
+	while(!done){
+		if(board[row-1][col] == notDisc && board[row][col] == '-'){
+			if(board[row-c][col] == 'W' || board[row-c][col] == 'B' || board[row-c][col] == '-'){
+				if(board[row-c][col] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
-	//col +c
-	while(board[row][col+c+1] == 'W' || board[row][col+c+1] == 'B' || board[row][col+c+1] == '-'){
-		if(board[row][col+c] == disc && (board[row][col+1] != disc) && (board[row][col+1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
+	//col +c 
+	while(!done){
+		if(board[row][col+1] == notDisc && board[row][col] == '-'){
+			if(board[row][col+c] == 'W' || board[row][col+c] == 'B' || board[row][col+c] == '-'){
+				if(board[row][col+c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
-	//col -c
-	while(board[row][col-c-1] == 'W' || board[row][col-c-1] == 'B' || board[row][col-c-1] == '-'){
-		if(board[row][col-c] == disc && (board[row][col-1] != disc) && (board[row][col-1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
+	//col-c
+	while(!done){
+		if(board[row][col-1] == notDisc && board[row][col] == '-'){
+			if(board[row][col-c] == 'W' || board[row][col-c] == 'B' || board[row][col-c] == '-'){
+				if(board[row][col-c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
-	//col +c row + r
-	while(board[row+r+1][col+c+1] == 'W' || board[row+r+1][col+c+1] == 'B' || board[row+r+1][col+c+1] == '-'){
-		if(board[row+r][col+c] == disc && (board[row+1][col+1] != disc) && (board[row+1][col+1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
-		r = r + 1;
+	//col -c row -c
+	while(!done){
+		if(board[row-1][col-1] == notDisc && board[row][col] == '-'){
+			if(board[row-c][col-c] == 'W' || board[row-c][col-c] == 'B' || board[row-c][col-c] == '-'){
+				if(board[row-c][col-c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
-	//col +c row -r
-	while(board[row-r-1][col+c+1] == 'W' || board[row-r-1][col+c+1] == 'B' || board[row-r-1][col+c+1] == '-'){
-		if(board[row-r][col+c] == disc && (board[row-1][col+1] != disc) && (board[row-1][col+1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
-		r = r + 1;
+	//col +c row -c
+	while(!done){
+		if(board[row-1][col+1] == notDisc && board[row][col] == '-'){
+			if(board[row-c][col+c] == 'W' || board[row-c][col+c] == 'B' || board[row-c][col+c] == '-'){
+				if(board[row-c][col+c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
 	c = 1;
 
-	//col -c row -r
-	while(board[row-r-1][col-c-1] == 'W' || board[row-r-1][col-c-1] == 'B' || board[row-r-1][col-c-1] == '-'){
-		if(board[row-r][col-c] == disc && (board[row-1][col-1] != disc) && (board[row-1][col-1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
-		r = r + 1;
+	//col -c row +c 
+	while(!done){
+		if(board[row+1][col-1] == notDisc && board[row][col] == '-'){
+			if(board[row+c][col-c] == 'W' || board[row+c][col-c] == 'B' || board[row+c][col-c] == '-'){
+				if(board[row+c][col-c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
 	}
-	r = 1;
-	c = 1;	
-
-	//col -c row +r
-	while(board[row+r+1][col-c-1] == 'W' || board[row+r+1][col-c-1] == 'B' || board[row+r+1][col-c-1] == '-'){
-		if(board[row+r][col-c] == disc && (board[row+1][col-1] != disc) && (board[row+1][col-1] != '-')){
-			canFlip = true;
-		}
-		c = c + 1;
-		r = r + 1;
-	}
-	r = 1;
 	c = 1;
 
-	if((canFlip) && (board[row][col] == '-' )){
-		return true;
-	}else{
-		return false;
-	} 
+	//col +c row +c
+	while(!done){
+		if(board[row+1][col+1] == notDisc && board[row][col] == '-'){
+			if(board[row+c][col+c] == 'W' || board[row+c][col+c] == 'B' || board[row+c][col+c] == '-'){
+				if(board[row+c][col+c] == disc){
+					canFlip = true;
+					done = true;
+                }
+            }else{
+				done = true;
+            }
+        }else{
+			done = true;
+        }
+		c++;
+	}
+	c = 1;
+
+	return canFlip;
 } //Done
 
 // Places the disc at location row,col and flips the opponent discs as needed
@@ -316,7 +379,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		board[row][col] = disc;
 	}
  	//return;	
-	// Finish this
+	// Done
 }
 
 // Returns true if a valid move for disc is available; false otherwise
@@ -353,7 +416,7 @@ bool isValidMoveAvailable(int size, char board[][size], char disc)
 	//Done
 }
 
-// Returns true if the board is fully occupied with discs; false otherwise
+// Returns true if the board is fully occupied with discs; false otherwise 
 bool isBoardFull(int size, char board[][size])
 {
 	int count = 0;
