@@ -242,72 +242,73 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	if(isValidMove(size,board,row,col,disc)){
 		if(bm){
 			while(board[row+c][col] == notDisc){
-				if(board[row+2][col] != '-'){
+				if(board[row+2][col] == 'W' || board[row+2][col] == 'B'){
 					board[row+c][col] = disc;
-					c++;
                 }
+				c++;
 			}
 			c = 1;
         }
 		if(tm){
 			while(board[row-c][col] == notDisc){
-				if(board[row-2][col] != '-'){
+				if(board[row-2][col] == 'W' || board[row-2][col] == 'B'){
 					board[row-c][col] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
 		if(ml){
 			while(board[row][col-c] == notDisc){
-				if(board[row][col-2] != '-'){
+				if(board[row][col-2] == 'W' || board[row][col-2] == 'B'){
 					board[row][col-c] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
 		if(mr){
 			while(board[row][col+c] == notDisc){
-				if(board[row][col+2] != '-'){
+				if(board[row][col+2] == 'W' || board[row][col+2] == 'B'){
 					board[row][col+c] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
 		if(br){
 			while(board[row+c][col+c] == notDisc){
-				if(board[row+2][col+2] != '-'){
+				if(board[row+2][col+2] == 'W' || board[row+2][col+2] == 'B'){
 					board[row+c][col+c] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
 		if(tl){
 			while(board[row-c][col-c] == notDisc){
-				if(board[row-2][col-2] != '-'){
+				if(board[row-2][col-2] == 'W' || board[row-2][col-2] == 'B'){
 					board[row-c][col-c] = disc;
-					c++;
 				}
+				c++;
+			}
 			c = 1;
         }
 		if(tr){
 			while(board[row-c][col+c] == notDisc){
-				if(board[row-2][col+2] != '-'){
+				if(board[row-2][col+2] == 'W' || board[row-2][col+2] == 'B'){
 					board[row-c][col+c] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
 		if(bl){
 			while(board[row+c][col-c] == notDisc){
-				if(board[row+2][col-2] != '-'){
+				if(board[row+2][col-2] == 'W' || board[row+2][col-2] == 'B'){
 					board[row+c][col-c] = disc;
-					c++;
 				}
+				c++;
 			}
 			c = 1;
         }
