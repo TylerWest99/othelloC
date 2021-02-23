@@ -61,173 +61,116 @@ void initializeBoard(int size, char board[][size])
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
 {	
-	bool canFlip = false;
-	bool done = false;
-	int c = 1;
 	char notDisc;
-	if(disc == WHITE){
+
+	if(disc == 'W'){
 		notDisc = 'B';
     }
-	if(disc == BLACK){
+	if(disc == 'B'){
 		notDisc = 'W';
     }
 
-	//row +r
-	while(!done){
-		if(board[row+1][col] == notDisc && board[row][col] == '-'){
-			if(board[row+c][col] == 'W' || board[row+c][col] == 'B' || board[row+c][col] == '-'){
-				if(board[row+c][col] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	int maxRow = size;
+	int maxCol = size;
+	int minRow = 1;
+	int minCol = 1;
+
+
+	int c = 1; //count var
+
+	/* row - */
+	if(board[row][col] == '-' && board[row-1][col] == notDisc && row-1 >= minRow){ /* checks to see if spot is empty and spot above is notDisc */
+		while((row-c >= minRow) && board[row-c][col] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row-c-1][col] == disc){ /* if the next one after is the same as disc return true */
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//row -r
-	while(!done){
-		if(board[row-1][col] == notDisc && board[row][col] == '-'){
-			if(board[row-c][col] == 'W' || board[row-c][col] == 'B' || board[row-c][col] == '-'){
-				if(board[row-c][col] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* row + */
+	if(board[row][col] == '-' && board[row+1][col] == notDisc && row+1 <= maxRow){ /* checks to see if spot is empty and spot above is notDisc */
+		while((row+c <= maxRow) && board[row+c][col] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row+c+1][col] == disc){ /* if the next one after is the same as disc return true */
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col +c 
-	while(!done){
-		if(board[row][col+1] == notDisc && board[row][col] == '-'){
-			if(board[row][col+c] == 'W' || board[row][col+c] == 'B' || board[row][col+c] == '-'){
-				if(board[row][col+c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col - */
+	if(board[row][col] == '-' && board[row][col-1] == notDisc && col-1 >= minCol){ /* checks to see if spot is empty and spot above is notDisc */
+		while((col-c >= minCol) && board[row][col-c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row][col-c-1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col-c
-	while(!done){
-		if(board[row][col-1] == notDisc && board[row][col] == '-'){
-			if(board[row][col-c] == 'W' || board[row][col-c] == 'B' || board[row][col-c] == '-'){
-				if(board[row][col-c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col + */
+	if(board[row][col] == '-' && board[row][col+1] == notDisc && col+1 <= maxCol){ /* checks to see if spot is empty and spot around is notDisc */
+		while((col+c <= maxCol) && board[row][col+c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row][col+c+1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col -c row -c ''
-	while(!done){
-		if(board[row-1][col-1] == notDisc && board[row][col] == '-'){
-			if(board[row-c][col-c] == 'W' || board[row-c][col-c] == 'B' || board[row-c][col-c] == '-'){
-				if(board[row-c][col-c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col + row + */
+	if(board[row][col] == '-' && board[row+1][col+1] == notDisc && col+1 <= maxCol && row+1 <=maxRow){ /* checks to see if spot is empty and spot around is notDisc */
+		while((col+c <= maxCol && row+c <= maxRow) && board[row+c][col+c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row+c+1][col+c+1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col +c row -c ''
-	while(!done){
-		if(board[row-1][col+1] == notDisc && board[row][col] == '-'){
-			if(board[row-c][col+c] == 'W' || board[row-c][col+c] == 'B' || board[row-c][col+c] == '-'){
-				if(board[row-c][col+c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col + row - */
+	if(board[row][col] == '-' && board[row-1][col+1] == notDisc && col+1 <= maxCol && row-1 >= minRow){ /* checks to see if spot is empty and spot around is notDisc */
+		while((col+c <= maxCol && row-c >= minRow) && board[row-c][col+c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row-c-1][col+c+1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col -c row +c  
-	while(!done){
-		if(board[row+1][col-1] == notDisc && board[row][col] == '-'){
-			if(board[row+c][col-c] == 'W' || board[row+c][col-c] == 'B' || board[row+c][col-c] == '-'){
-				if(board[row+c][col-c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col - row - */
+	if(board[row][col] == '-' && board[row-1][col-1] == notDisc && col-1 >= minCol && row-1 >= minRow){ /* checks to see if spot is empty and spot around is notDisc */
+		while((col-c >= minCol && row-c >= minRow) && board[row-c][col-c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row-c-1][col-c-1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
 
-	//col +c row +c 
-	while(!done){
-		if(board[row+1][col+1] == notDisc && board[row][col] == '-'){
-			if(board[row+c][col+c] == 'W' || board[row+c][col+c] == 'B' || board[row+c][col+c] == '-'){
-				if(board[row+c][col+c] == disc){
-					canFlip = true;
-					done = true;
-                }
-            }else{
-				done = true;
+	/* col - row + */
+	if(board[row][col] == '-' && board[row+1][col-1] == notDisc && col-1 >= minCol && row+1 <=maxRow){ /* checks to see if spot is empty and spot around is notDisc */
+		while((col-c >= minCol && row+c <= maxRow) && board[row+c][col-c] == notDisc){ /* while in range of top and bottom rows */
+			if(board[row+c+1][col-c-1] == disc){
+				return true;
             }
-        }else{
-			done = true;
+			c++;
         }
-		c++;
-	}
+    }
 	c = 1;
-	done = false;
+	
 
-	return canFlip;
-} //Done
+	return false;
+} 
 
-// Places the disc at location row,col and flips the opponent discs as needed
+// Places the disc at location row,col and flips the opponent discs as needed ""
 void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	//declares adn sets not disc the opposite of disc
 	char notDisc;
@@ -259,21 +202,21 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
             }
         }
     }
-	if(board[row-1][col] == notDisc){ //tm r- 
+	if(board[row-1][col] == notDisc){ //tm r- "" 
 		for(int i = 0; i < size; i++){
 			if(board[row-i][col] == disc){
 				tm = true;
             }
         }
     }
-	if(board[row][col-1] == notDisc){ //ml c- 
+	if(board[row][col-1] == notDisc){ //ml c-  
 		for(int i = 0; i < size; i++){
 			if(board[row][col-i] == disc){
 				ml = true;
             }
         }
     }
-	if(board[row][col+1] == notDisc){ //mr c+ 
+	if(board[row][col+1] == notDisc){ //mr c+ ""
 		for(int i = 0; i < size; i++){
 			if(board[row][col+i] == disc){
 				mr = true;
