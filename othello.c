@@ -65,10 +65,10 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 	bool done = false;
 	int c = 1;
 	char notDisc;
-	if(disc == 'W'){
+	if(disc == WHITE){
 		notDisc = 'B';
     }
-	if(disc == 'B'){
+	if(disc == BLACK){
 		notDisc = 'W';
     }
 
@@ -89,6 +89,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
 	//row -r
 	while(!done){
@@ -107,6 +108,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
 	//col +c 
 	while(!done){
@@ -125,6 +127,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
 	//col-c
 	while(!done){
@@ -143,8 +146,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
-	//col -c row -c
+	//col -c row -c ''
 	while(!done){
 		if(board[row-1][col-1] == notDisc && board[row][col] == '-'){
 			if(board[row-c][col-c] == 'W' || board[row-c][col-c] == 'B' || board[row-c][col-c] == '-'){
@@ -161,8 +165,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
-	//col +c row -c
+	//col +c row -c ''
 	while(!done){
 		if(board[row-1][col+1] == notDisc && board[row][col] == '-'){
 			if(board[row-c][col+c] == 'W' || board[row-c][col+c] == 'B' || board[row-c][col+c] == '-'){
@@ -179,8 +184,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
-	//col -c row +c 
+	//col -c row +c  
 	while(!done){
 		if(board[row+1][col-1] == notDisc && board[row][col] == '-'){
 			if(board[row+c][col-c] == 'W' || board[row+c][col-c] == 'B' || board[row+c][col-c] == '-'){
@@ -197,8 +203,9 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
-	//col +c row +c
+	//col +c row +c 
 	while(!done){
 		if(board[row+1][col+1] == notDisc && board[row][col] == '-'){
 			if(board[row+c][col+c] == 'W' || board[row+c][col+c] == 'B' || board[row+c][col+c] == '-'){
@@ -215,6 +222,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		c++;
 	}
 	c = 1;
+	done = false;
 
 	return canFlip;
 } //Done
