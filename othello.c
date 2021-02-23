@@ -168,6 +168,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 	
 
 	return false;
+	//DONE
 } 
 
 // Places the disc at location row,col and flips the opponent discs as needed ""
@@ -180,6 +181,11 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	if(disc == 'W'){
 		notDisc = 'B';
 	}
+
+	int maxRow = size;
+	int maxCol = size;
+	int minRow = 1;
+	int minCol = 1;
 
 	bool tl = false;
 	bool tm = false;
@@ -195,58 +201,58 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 
 	// where we set the lanes true or false values prior to the isValid move check 
 
-	if(board[row+1][col] == notDisc){ //bm r+
+	if(board[row+1][col] == notDisc && row+1 <= maxRow){ //bm r+
 		for(int i = 0; i < size; i++){
-			if(board[row+i][col] == disc){
+			if(board[row+i][col] == disc && row+i <= maxRow){
 				bm = true;
             }
         }
     }
-	if(board[row-1][col] == notDisc){ //tm r- "" 
+	if(board[row-1][col] == notDisc && row-1 >= minRow){ //tm r- "" 
 		for(int i = 0; i < size; i++){
-			if(board[row-i][col] == disc){
+			if(board[row-i][col] == disc && row-i >= minRow){
 				tm = true;
             }
         }
     }
-	if(board[row][col-1] == notDisc){ //ml c-  
+	if(board[row][col-1] == notDisc && col-1 >= minCol){ //ml c-   
 		for(int i = 0; i < size; i++){
-			if(board[row][col-i] == disc){
+			if(board[row][col-i] == disc && col-i >= minCol){
 				ml = true;
             }
         }
-    }
-	if(board[row][col+1] == notDisc){ //mr c+ ""
+    } 
+	if(board[row][col+1] == notDisc && col+1 <= maxCol){ //mr c+ "" 
 		for(int i = 0; i < size; i++){
-			if(board[row][col+i] == disc){
+			if(board[row][col+i] == disc && col+i >= maxCol){
 				mr = true;
             }
         }
     }
-	if(board[row+1][col+1] == notDisc){ //br r+  c+ 
+	if(board[row+1][col+1] == notDisc && row+1 <= maxRow && col+1 <= maxCol){ //br r+  c+  
 		for(int i = 0; i < size; i++){
-			if(board[row+i][col+i] == disc){
+			if(board[row+i][col+i] == disc && row+i <= maxRow && col+i <= maxCol){
 				br = true;
             }
         }
     }
-	if(board[row-1][col-1] == notDisc){ //tl r- c-
+	if(board[row-1][col-1] == notDisc && row-1 >= minRow && col-1 >= minCol){ //tl r- c-  
 		for(int i = 0; i < size; i++){
-			if(board[row-i][col-i] == disc){
+			if(board[row-i][col-i] == disc && row-i >= minRow && col-i >= minCol){
 				tl = true;
             }
         }
     }
-	if(board[row+1][col-1] == notDisc){ //bl r+ c-
+	if(board[row+1][col-1] == notDisc && row && row+1 <= maxRow && col-1 >= minCol){ //bl r+ c-
 		for(int i = 0; i < size; i++){
-			if(board[row+i][col-i] == disc){
+			if(board[row+i][col-i] == disc && row+i <= maxRow && col-i >= minCol){
 				bl = true;
             }
         }
     }
-	if(board[row-1][col+1] == notDisc){ //tr r- c+
+	if(board[row-1][col+1] == notDisc && row-1 >= minRow && col+1 <= maxCol){ /*tr r- c+ */
 		for(int i = 0; i < size; i++){
-			if(board[row-i][col+i] == disc){
+			if(board[row-i][col+i] == disc && row-i >= minRow && col+i <= maxCol){
 				tr = true;
             }
         }
