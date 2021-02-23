@@ -157,8 +157,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 } //Done
 
 // Places the disc at location row,col and flips the opponent discs as needed
-void placeDiscAt(int size, char board[][size], int row, int col, char disc)
-{
+void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	//declares adn sets not disc the opposite of disc
 	char notDisc;
 	if(disc == 'B'){
@@ -182,7 +181,6 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
 
 	// where we set the lanes true or false values prior to the isValid move check 
 
-	
 	if(board[row+1][col] == notDisc){ //bm r+
 		for(int i = 0; i < size; i++){
 			if(board[row+i][col] == disc){
@@ -241,80 +239,83 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc)
     }
 
 
-	
-	c = 0;
-	if(isValidMove(size,board,row,col,disc)) {
+	if(isValidMove(size,board,row,col,disc)){
 		if(bm){
 			while(board[row+c][col] == notDisc){
-				board[row+c][col] = disc;
-				c++;
+				if(board[row+2][col] != '-'){
+					board[row+c][col] = disc;
+					c++;
+                }
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(tm){
 			while(board[row-c][col] == notDisc){
-				board[row-c][col] = disc;
-				c++;
+				if(board[row-2][col] != '-'){
+					board[row-c][col] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(ml){
 			while(board[row][col-c] == notDisc){
-				board[row][col-c] = disc;
-				c++;
+				if(board[row][col-2] != '-'){
+					board[row][col-c] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(mr){
 			while(board[row][col+c] == notDisc){
-				board[row][col+c] = disc;
-				c++;
+				if(board[row][col+2] != '-'){
+					board[row][col+c] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(br){
 			while(board[row+c][col+c] == notDisc){
-				board[row+c][col+c] = disc;
-				c++;
+				if(board[row+2][col+2] != '-'){
+					board[row+c][col+c] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(tl){
 			while(board[row-c][col-c] == notDisc){
-				board[row-c][col-c] = disc;
-				c++;
-			}
-			c = 0;
-			
+				if(board[row-2][col-2] != '-'){
+					board[row-c][col-c] = disc;
+					c++;
+				}
+			c = 1;
         }
 		if(tr){
 			while(board[row-c][col+c] == notDisc){
-				board[row-c][col+c] = disc;
-				c++;
+				if(board[row-2][col+2] != '-'){
+					board[row-c][col+c] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 		if(bl){
 			while(board[row+c][col-c] == notDisc){
-				board[row+c][col-c] = disc;
-				c++;
+				if(board[row+2][col-2] != '-'){
+					board[row+c][col-c] = disc;
+					c++;
+				}
 			}
-			c = 0;
-			
+			c = 1;
         }
 
 		board[row][col] = disc;
-		return;
 	}
- 			
-
-	// Do this
+ 	//return;	
+	// Finish this
 }
 
 // Returns true if a valid move for disc is available; false otherwise
