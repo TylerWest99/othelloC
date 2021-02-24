@@ -201,57 +201,50 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 
 	// where we set the lanes true or false values prior to the isValid move check 
 
-	if(board[row+1][col] == notDisc && row+1 <= maxRow){ //bm r+
-		for(int i = 0; i < size; i++){
+	if(board[row+1][col] == notDisc && row+1 <= maxRow){ //bm 
+		for(int i = 1; i < size; i++){
 			if(board[row+i][col] == disc && row+i <= maxRow){
 				bm = true;
             }
         }
     }
-	if(board[row-1][col] == notDisc && row-1 >= minRow){ //tm r- "" 
-		for(int i = 0; i < size; i++){
-			if(board[row-i][col] == disc && row-i >= minRow){
-				tm = true;
-            }
-        }
-    }
-	if(board[row][col-1] == notDisc && col-1 >= minCol){ //ml c-   
-		for(int i = 0; i < size; i++){
+	if(board[row][col-1] == notDisc && col-1 >= minCol){ //ml   
+		for(int i = 1; i < size; i++){
 			if(board[row][col-i] == disc && col-i >= minCol){
 				ml = true;
             }
         }
     } 
-	if(board[row][col+1] == notDisc && col+1 <= maxCol){ //mr c+ "" 
-		for(int i = 0; i < size; i++){
-			if(board[row][col+i] == disc && col+i >= maxCol){
+	if(board[row][col+1] == notDisc && col+1 <= maxCol){ //mr 
+		for(int i = 1; i < size; i++){
+			if(board[row][col+i] == disc && col+i <= maxCol){
 				mr = true;
             }
         }
     }
-	if(board[row+1][col+1] == notDisc && row+1 <= maxRow && col+1 <= maxCol){ //br r+  c+  
-		for(int i = 0; i < size; i++){
+	if(board[row+1][col+1] == notDisc && row+1 <= maxRow && col+1 <= maxCol){ //br  
+		for(int i = 1; i < size; i++){
 			if(board[row+i][col+i] == disc && row+i <= maxRow && col+i <= maxCol){
 				br = true;
             }
         }
     }
-	if(board[row-1][col-1] == notDisc && row-1 >= minRow && col-1 >= minCol){ //tl r- c-  
-		for(int i = 0; i < size; i++){
+	if(board[row-1][col-1] == notDisc && row-1 >= minRow && col-1 >= minCol){ //tl  
+		for(int i = 1; i < size; i++){
 			if(board[row-i][col-i] == disc && row-i >= minRow && col-i >= minCol){
 				tl = true;
             }
         }
     }
-	if(board[row+1][col-1] == notDisc && row && row+1 <= maxRow && col-1 >= minCol){ //bl r+ c-
-		for(int i = 0; i < size; i++){
+	if(board[row+1][col-1] == notDisc && row && row+1 <= maxRow && col-1 >= minCol){ //bl
+		for(int i = 1; i < size; i++){
 			if(board[row+i][col-i] == disc && row+i <= maxRow && col-i >= minCol){
 				bl = true;
             }
         }
     }
-	if(board[row-1][col+1] == notDisc && row-1 >= minRow && col+1 <= maxCol){ /*tr r- c+ */
-		for(int i = 0; i < size; i++){
+	if(board[row-1][col+1] == notDisc && row-1 >= minRow && col+1 <= maxCol){ /*tr */
+		for(int i = 1; i < size; i++){
 			if(board[row-i][col+i] == disc && row-i >= minRow && col+i <= maxCol){
 				tr = true;
             }
@@ -262,76 +255,61 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	if(isValidMove(size,board,row,col,disc)){
 		if(bm){
 			while(board[row+c][col] == notDisc){
-				if(board[row+2][col] == 'W' || board[row+2][col] == 'B'){
-					board[row+c][col] = disc;
-                }
+				board[row+c][col] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(tm){
 			while(board[row-c][col] == notDisc){
-				if(board[row-2][col] == 'W' || board[row-2][col] == 'B'){
-					board[row-c][col] = disc;
-				}
+				board[row-c][col] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(ml){
 			while(board[row][col-c] == notDisc){
-				if(board[row][col-2] == 'W' || board[row][col-2] == 'B'){
-					board[row][col-c] = disc;
-				}
+				board[row][col-c] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(mr){
 			while(board[row][col+c] == notDisc){
-				if(board[row][col+2] == 'W' || board[row][col+2] == 'B'){
-					board[row][col+c] = disc;
-				}
+				board[row][col+c] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(br){
 			while(board[row+c][col+c] == notDisc){
-				if(board[row+2][col+2] == 'W' || board[row+2][col+2] == 'B'){
-					board[row+c][col+c] = disc;
-				}
-				c++;
-			}
-			c = 1;
-        }
-		if(tl){
-			while(board[row-c][col-c] == notDisc){
-				if(board[row-2][col-2] == 'W' || board[row-2][col-2] == 'B'){
-					board[row-c][col-c] = disc;
-				}
+				board[row+c][col+c] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(tr){
 			while(board[row-c][col+c] == notDisc){
-				if(board[row-2][col+2] == 'W' || board[row-2][col+2] == 'B'){
-					board[row-c][col+c] = disc;
-				}
+				board[row-c][col+c] = disc;
+				c++;
+			}
+			c = 1;
+        }
+		if(tl){
+			while(board[row-c][col-c] == notDisc){
+				board[row-c][col-c] = disc;
 				c++;
 			}
 			c = 1;
         }
 		if(bl){
 			while(board[row+c][col-c] == notDisc){
-				if(board[row+2][col-2] == 'W' || board[row+2][col-2] == 'B'){
-					board[row+c][col-c] = disc;
-				}
+				board[row+c][col-c] = disc;
 				c++;
 			}
 			c = 1;
         }
+
 
 		board[row][col] = disc;
 	}
@@ -342,34 +320,15 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 /* Returns true if a valid move for disc is available; false otherwise */
 bool isValidMoveAvailable(int size, char board[][size], char disc)
 {
-
-	int whiteCounter = 0;
-	int blackCounter = 0;
-	bool canMove = false;
-
-	for(int i = 0; i < size; i++){
-		for(int j = 0; j < size; j++){
-			if(board[i][j] == 'B'){
-				blackCounter = blackCounter + 1;
-			}
-			if(board[i][j] == 'W'){
-				whiteCounter = whiteCounter + 1;
-			}
-		}
-	}
-
-	if(whiteCounter == 0 || blackCounter == 0){
-		return canMove;
-	}
-
-	for(int i = 0; i < size; i++){
-		for(int j = 0; j < size; j++){
+	for(int i = 0; i <= size; i++){
+		for(int j = 0; j <= size; j++){
 			if(isValidMove(size, board, i, j, disc)){
-				canMove = true;
+				return true;
 			}
 		}
 	}
-	return canMove;
+	return false;
+
 	//Done
 }
 
