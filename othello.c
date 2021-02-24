@@ -339,7 +339,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	// Done
 }
 
-// Returns true if a valid move for disc is available; false otherwise
+/* Returns true if a valid move for disc is available; false otherwise */
 bool isValidMoveAvailable(int size, char board[][size], char disc)
 {
 
@@ -373,8 +373,8 @@ bool isValidMoveAvailable(int size, char board[][size], char disc)
 	//Done
 }
 
-// Returns true if the board is fully occupied with discs; false otherwise 
-bool isBoardFull(int size, char board[][size])
+/* Returns true if the board is fully occupied with discs; false otherwise */
+bool isBoardFull(int size, char board[][size]) 
 {
 	int count = 0;
 	for(int i = 0; i < size; i++){
@@ -391,7 +391,7 @@ bool isBoardFull(int size, char board[][size])
 	// Done
 }
 
-// Returns true if either the board is full or a valid move is not available for either disc; false otherwise
+// Returns true if either the board is full or a valid move is not available for either disc; false otherwise 
 bool isGameOver(int size, char board[][size])
 {
 	if((isBoardFull(size, board)) || (!isValidMoveAvailable(size,board,'W') && (!isValidMoveAvailable(size,board,'B')))){
