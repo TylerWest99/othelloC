@@ -60,13 +60,18 @@ void initializeBoard(int size, char board[][size])
 
 // Returns true if moving the disc to location row,col is valid; false otherwise
 bool isValidMove(int size, char board[][size], int row, int col, char disc)
-{	
+{
+
 	char notDisc;
 
-	int maxRow = size;
-	int maxCol = size;
-	int minRow = 1;
-	int minCol = 1;
+	int maxRow = size-1;
+	int maxCol = size-1;
+	int minRow = 0;
+	int minCol = 0;
+
+	if(board[row][col] != '-'){
+		return false;
+	}
 
 	if(disc == 'W'){
 		notDisc = 'B';
@@ -75,10 +80,13 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 		notDisc = 'W';
     }
 
-	bool surrondedByOpposite = ((board[row+1][col] == notDisc && row+1 <= maxRow) || (board[row-1][col] == notDisc && row-1 >= minRow) || (board[row][col+1] == notDisc &&  col+1 <= maxCol) ||
+	
+
+	/*bool surrondedByOpposite = ((board[row+1][col] == notDisc && row+1 <= maxRow) || (board[row-1][col] == notDisc && row-1 >= minRow) || (board[row][col+1] == notDisc &&  col+1 <= maxCol) ||
 								(board[row][col-1] == notDisc && col-1 >= minCol) || (board[row-1][col-1] == notDisc && col-1 >= minCol && row-1 >= minRow) || 
 								(board[row+1][col+1] == notDisc && col+1 >= minCol && row+1 >= minRow) || (board[row+1][col-1] == notDisc && col-1 >= minCol && row+1 <= maxRow) ||
 								(board[row-1][col+1] == notDisc && col+1 <= maxCol && row-1 >= minRow));
+	*/
 
 	bool tlOpp = (board[row-1][col-1] == notDisc && col-1 >= minCol && row-1 >= minRow);
 	bool trOpp = (board[row-1][col+1] == notDisc && col+1 <= maxCol && row-1 >= minRow);
@@ -87,187 +95,97 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 	bool mlOpp = (board[row][col-1] == notDisc && col-1 >= minCol);
 	bool blOpp = (board[row+1][col-1] == notDisc && col-1 >= minCol && row+1 <= maxRow);
 	bool bmOpp = (board[row+1][col] == notDisc && row+1 <= maxRow);
-	bool brOpp = (board[row+1][col+1] == notDisc && col+1 >= minCol && row+1 >= minRow);
+	bool brOpp = (board[row+1][col+1] == notDisc && col+1 <= maxCol && row+1 <= maxRow);
 
-	bool bl = false;
-	bool bm = false;
-	bool br = false;
-	bool mr = false;
-	bool ml = false;
-	bool tr = false;
-	bool tm = false;
-	bool tl = false;
 
 	int c = 1;
 
-	if(surrondedByOpposite){
-		//tl
-		if(tlOpp){
-			while(board[row-c][col-c] == notDisc && row-c >= minRow && col-c >= minCol){
-				c++;
-			}
-			if(board[row-c][col-c] == disc){
-				tl = true;
-			}
+	//tl
+	if(tlOpp){
+		while(board[row-c][col-c] == notDisc && row-c >= minRow && col-c >= minCol){
+			c++;
 		}
-		c = 1;
+		if(board[row-c][col-c] == disc && row-c >= minRow && col-c >= minCol){
+			return true;
+		}
+	}
+	c = 1;
+	
+	//tr
+	if(trOpp){
+		while(board[row-c][col+c] == notDisc && row-c >= minRow && col+c <= maxCol){
+			c++;
+		}
+		if(board[row-c][col+c] == disc && row-c >= minRow && col+c <= maxCol){
+			return true;
+		}
+	}
+	c = 1;
+
+	//tm
+	if(tmOpp){
+		while(board[row-c][col] == notDisc && row-c >= minRow){
+			c++;
+		}
+		if(board[row-c][col] == disc && row-c >= minRow){
+			return true;
+		}
+	}
+	c = 1;
+
+	//ml
+	if(mlOpp){
+		while(board[row][col-c] == notDisc && col-c >= minCol){
+			c++;
+		}
+		if(board[row][col-c] == disc && col-c >= minCol){
+			return true;
+		}
+	}
+	c = 1;
+
+	//mr
+	if(mrOpp){
+		while(board[row][col+c] == notDisc && col+c <= maxCol){
+			c++;
+		}
+		if(board[row][col+c] == disc  && col+c <= maxCol){
+			return true;
+		}
+	}
+	c = 1;
+
+	//bl
+	if(blOpp){
+		while(board[row+c][col-c] == notDisc && row+c <= maxRow  && col-c >= minCol){
+			c++;
+		}
+		if(board[row+c][col-c] == disc && row+c <= maxRow  && col-c >= minCol){
+			return true;
+		}
+	}
+	c = 1;
+
 		
-		//tr
-		if(trOpp){
-			while(board[row-c][col+c] == notDisc && row-c >= minRow && col+c <= maxCol){
-				c++;
-			}
-			if(board[row-c][col+c] == disc){
-				tr = true;
-			}
-		}
-		c = 1;
-
-		//tm
-		if(tmOpp){
-			while(board[row-c][col] == notDisc && row-c >= minRow){
-				c++;
-			}
-			if(board[row-c][col] == disc){
-				tm = true;
-			}
-		}
-		c = 1;
-
-		//ml
-		if(mlOpp){
-			while(board[row][col-c] == notDisc && col-c >= minCol){
-				c++;
-			}
-			if(board[row][col-c] == disc){
-				ml = true;
-			}
-		}
-		c = 1;
-
-		//mr
-		if(mrOpp){
-			while(board[row][col+c] == notDisc && col+c <= maxCol){
-				c++;
-			}
-			if(board[row][col+c] == disc){
-				mr = true;
-			}
-		}
-		c = 1;
-
-		//bl
-		if(blOpp){
-			while(board[row+c][col-c] == notDisc && row+c <= maxRow  && col-c >= minCol){
-				c++;
-			}
-			if(board[row+c][col-c] == disc){
-				bl = true;
-			}
-		}
-		c = 1;
-
-		
-		//bm
-		if(bmOpp){
-			while(board[row+c][col] == notDisc && row+c <= maxRow){
-				c++;
-			}
-			if(board[row+c][col] == disc){
-				bm = true;
-			}
-		}
-		c = 1;
-
-		//br
-		if(brOpp){
-			while(board[row+c][col+c] == notDisc && row+c <= maxRow  && col+c <= maxCol){
-				c++;
-			}
-			if(board[row+c][col+c] == disc){
-				br = true;
-			}
-		}
-		c = 1;
-	} 
-
-	if(tm){
-		while(board[row-c][col] == notDisc){
+	//bm
+	if(bmOpp){
+		while(board[row+c][col] == notDisc && row+c <= maxRow){
 			c++;
 		}
-		if(board[row-c][col] == disc){
+		if(board[row+c][col] == disc && row+c <= maxRow){
 			return true;
 		}
 	}
 	c = 1;
 
-	if(bm){
-		while(board[row+c][col] == notDisc){
+	//br
+	if(brOpp){
+		while(board[row+c][col+c] == notDisc && row+c <= maxRow  && col+c <= maxCol){
 			c++;
 		}
-		if(board[row+c][col] == disc){
+		if(board[row+c][col+c] == disc  && row+c <= maxRow  && col+c <= maxCol){
 			return true;
 		}
-	}
-	c = 1;
-
-	if(ml){
-		while(board[row][col-c] == notDisc){
-			c++;
-		}
-		if(board[row][col-c] == disc){
-			return true;
-		};
-	}
-	c = 1;
-
-	if(mr){
-		while(board[row][col+c] == notDisc){
-			c++;
-		}
-		if(board[row][col+c] == disc){
-			return true;
-		}
-	}
-	c = 1;
-
-	if(tl){
-		while(board[row-c][col-c] == notDisc){
-			c++;
-		}
-		if(board[row-c][col-c] == disc){
-			return true;
-		};
-	}
-	c = 1;
-
-	if(br){
-		while(board[row+c][col+c] == notDisc){
-			c++;
-		}
-		if(board[row+c][col+c] == disc){
-			return true;
-		}
-	}
-	c = 1;
-
-	if(bl){
-		while(board[row+c][col-c] == notDisc){
-			c++;
-		}
-		if(board[row+c][col-c] == disc){
-			return true;
-		}
-	}
-	c = 1;
-
-	if(tr){
-		while(board[row-c][col+c] == notDisc){
-			c++;
-		}
-		if(board[row-c][col+c] == disc){
-			return true;
-		};
 	}
 	c = 1;
 
@@ -277,6 +195,7 @@ bool isValidMove(int size, char board[][size], int row, int col, char disc)
 // Places the disc at location row,col and flips the opponent discs as needed ""
 void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	//declares adn sets not disc the opposite of disc
+
 	char notDisc;
 	if(disc == 'B'){
 		notDisc = 'W';
@@ -285,10 +204,10 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		notDisc = 'B';
 	}
 
-	int maxRow = size;
-	int maxCol = size;
-	int minRow = 1;
-	int minCol = 1;
+	int maxRow = size-1;
+	int maxCol = size-1;
+	int minRow = 0;
+	int minCol = 0;
 
 	int c = 1;
 
@@ -308,14 +227,14 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 	bool mlOpp = (board[row][col-1] == notDisc && col-1 >= minCol);
 	bool blOpp = (board[row+1][col-1] == notDisc && col-1 >= minCol && row+1 <= maxRow);
 	bool bmOpp = (board[row+1][col] == notDisc && row+1 <= maxRow);
-	bool brOpp = (board[row+1][col+1] == notDisc && col+1 >= minCol && row+1 >= minRow);
+	bool brOpp = (board[row+1][col+1] == notDisc && col+1 <= maxCol && row+1 <= maxRow);
 
 	//tl
 	if(tlOpp){
 		while(board[row-c][col-c] == notDisc && row-c >= minRow && col-c >= minCol){
 			c++;
 		}
-		if(board[row-c][col-c] == disc){
+		if(board[row-c][col-c] == disc && row-c >= minRow && col-c >= minCol){
 			tlFlips = true;
 		}
 	}
@@ -326,7 +245,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row-c][col+c] == notDisc && row-c >= minRow && col+c <= maxCol){
 			c++;
 		}
-		if(board[row-c][col+c] == disc){
+		if(board[row-c][col+c] == disc && row-c >= minRow && col+c <= maxCol){
 			trFlips = true;
 		}
 	}
@@ -337,7 +256,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row-c][col] == notDisc && row-c >= minRow){
 			c++;
 		}
-		if(board[row-c][col] == disc){
+		if(board[row-c][col] == disc && row-c >= minRow){
 			tmFlips = true;
 		}
 	}
@@ -348,7 +267,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row][col-c] == notDisc && col-c >= minCol){
 			c++;
 		}
-		if(board[row][col-c] == disc){
+		if(board[row][col-c] == disc && col-c >= minCol){
 			mlFlips = true;
 		}
 	}
@@ -359,7 +278,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row][col+c] == notDisc && col+c <= maxCol){
 			c++;
 		}
-		if(board[row][col+c] == disc){
+		if(board[row][col+c] == disc && col+c <= maxCol){
 			mrFlips = true;
 		}
 	}
@@ -370,7 +289,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row+c][col-c] == notDisc && row+c <= maxRow  && col-c >= minCol){
 			c++;
 		}
-		if(board[row+c][col-c] == disc){
+		if(board[row+c][col-c] == disc && row+c <= maxRow  && col-c >= minCol){
 			blFlips = true;
 		}
 	}
@@ -382,7 +301,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row+c][col] == notDisc && row+c <= maxRow){
 			c++;
 		}
-		if(board[row+c][col] == disc){
+		if(board[row+c][col] == disc && row+c <= maxRow){
 			bmFlips = true;
 		}
 	}
@@ -393,7 +312,7 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		while(board[row+c][col+c] == notDisc && row+c <= maxRow  && col+c <= maxCol){
 			c++;
 		}
-		if(board[row+c][col+c] == disc){
+		if(board[row+c][col+c] == disc && row+c <= maxRow  && col+c <= maxCol){
 			brFlips = true;
 		}
 	}
@@ -459,15 +378,16 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 		board[row][col] = disc;
 	}
  	//return;	
-	// wonky still
+	// Done
 }
 
 /* Returns true if a valid move for disc is available; false otherwise */
 bool isValidMoveAvailable(int size, char board[][size], char disc)
 {
-	for(int i = 0; i <= size; i++){
-		for(int j = 0; j <= size; j++){
-			if(isValidMove(size, board, i, j, disc) && board[i][j] == '-'){
+
+	for(int i = 0; i < size; i++){
+		for(int j = 0; j < size; j++){
+			if(isValidMove(size, board, i, j, disc)){
 				return true;
 			}
 		}
@@ -498,11 +418,13 @@ bool isBoardFull(int size, char board[][size])
 // Returns true if either the board is full or a valid move is not available for either disc; false otherwise 
 bool isGameOver(int size, char board[][size])
 {
-	if((isBoardFull(size, board)) || (!isValidMoveAvailable(size,board,'W') && (!isValidMoveAvailable(size,board,'B')))){
+	if(isBoardFull(size, board)){
 		return true;
-	}else{
-		return false;
+	} 
+	if(!isValidMoveAvailable(size,board,'B') && !isValidMoveAvailable(size,board,'W')){
+		return true;
 	}
+
 	return false;	// Done
 }
 
