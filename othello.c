@@ -406,48 +406,56 @@ void placeDiscAt(int size, char board[][size], int row, int col, char disc){
 				c++;
 			}
 		}
+		c = 1;
 		if(brFlips){
 			while(board[row+c][col+c] == notDisc){
 				board[row+c][col+c] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(trFlips){
 			while(board[row-c][col+c] == notDisc){
 				board[row-c][col+c] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(blFlips){
 			while(board[row+c][col-c] == notDisc){
 				board[row+c][col-c] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(mlFlips){
 			while(board[row][col-c] == notDisc){
 				board[row][col-c] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(mrFlips){
 			while(board[row][col+c] == notDisc){
 				board[row][col+c] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(bmFlips){
 			while(board[row+c][col] == notDisc){
 				board[row+c][col] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		if(tmFlips){
 			while(board[row-c][col] == notDisc){
 				board[row-c][col] = disc;
 				c++;
 			}
 		}
+		c = 1;
 		board[row][col] = disc;
 	}
  	//return;	
